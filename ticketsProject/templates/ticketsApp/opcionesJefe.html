@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<!--css de iconos-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Opciones: {{ user.username}}</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <!--DATATABLE-->
+    <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <!--DATATABLE-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="bi bi-heart-pulse-fill"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Mesa de Ayuda</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'homeJefe' %}">
+            <i class="bi bi-box-arrow-up-left"></i>
+            <span>Volver</span></a>
+    </li>
+
+    
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Opciones para {{ user.username }}
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+
+        
+        
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+               <i class="bi bi-list-ul"></i>
+                <span>Opciones para {{ user.username }}</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Opciones</h6>
+                    <a class="collapse-item" href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
+                </div>
+            </div>
+        </li>
+        
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Interface
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+           aria-controls="collapsePages">
+           <i class="bi bi-file-earmark-fill"></i>
+            <span>Registrar Empleados</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Pantallas de registro:</h6>
+                
+                    <a class="collapse-item" href="{% url 'crearEjecutivo' %}">Registrar Ejecutivo</a>
+                
+            </div>
+        </div>
+    </li>
+
+    
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Importación del topbar -->
+            {% include 'base/topbar.html' %}
+            <!-- Fin de la importación del topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="mb-5">Bienvenido {{ user.username }}: Aquí puedes ver las Opciones del Ticket!😎👌</h1>
+
+                <!--formulario de botones opciones de usuario-->
+        <form class="col-8 offset-md-2 border-3 border border-info-secundary rounded p-4 mb-5"> <!--offset para centrar formulario-->
+            <div class="d-grid text-center"><!--hace que el boton ocupe todo el ancho-->
+                <h1>Menú de opciones del ticket</h1>
+                <div>
+                    <a href= "{% url 'registroCriticidades' %}" class="btn btn-primary my-3">Agregar Criticidad</a>
+                </div>
+        
+        
+                {%if criticidades %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>criticidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for criticidad in criticidades %}
+                            <tr>
+                                <td>{{criticidad.id}}</td>
+                                <td>{{criticidad.criticidad}}</td>
+        
+                                <td>
+                                    <a href="/editarCriticidades/{{criticidad.id}}" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                    <a href="/eliminarCriticidades/{{criticidad.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <h3>No hay Criticidades</h3>
+                {% endif %}
+
+                <div>
+                    <a href= "{% url 'registroAreas' %}" class="btn btn-primary my-3">Agregar Areas</a>
+                </div>
+                {%if areas %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>area</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for area in areas %}
+                                <tr>
+                                    <td>{{area.id}}</td>
+                                    <td>{{area.area}}</td>
+            
+                                    <td>
+                                        <a href="/editarAreas/{{area.id}}" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                        <a href="/eliminarAreas/{{area.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h3>No hay Areas</h3>
+                {% endif %}
+
+                <div>
+                    <a href= "{% url 'registroEstados' %}" class="btn btn-primary my-3">Agregar Estados</a>
+                </div>
+                {%if estados %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Estados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for estado in estados %}
+                                <tr>
+                                    <td>{{estado.id}}</td>
+                                    <td>{{estado.estado}}</td>
+            
+                                    <td>
+                                        <a href="/editarEstados/{{estado.id}}" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                        <a href="/eliminarEstados/{{estado.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h3>No hay Estados</h3>
+                {% endif %}
+
+                <div>
+                    <a href= "{% url 'registroServicios' %}" class="btn btn-primary my-3">Agregar Servicios</a>
+                </div>
+                {%if servicios %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Servicios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for servicio in servicios %}
+                                <tr>
+                                    <td>{{servicio.id}}</td>
+                                    <td>{{servicio.servicio}}</td>
+            
+                                    <td>
+                                        <a href="/editarServicios/{{servicio.id}}" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                        <a href="/eliminarServicios/{{servicio.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h3>No hay Servicios</h3>
+                {% endif %}
+
+                <div>
+                    <a href= "{% url 'registroTipos' %}" class="btn btn-primary my-3">Agregar Tipos</a>
+                </div>
+                {%if tipos %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tipo in tipos %}
+                                <tr>
+                                    <td>{{tipo.id}}</td>
+                                    <td>{{tipo.tipo}}</td>
+            
+                                    <td>
+                                        <a href="/editarTipos/{{tipo.id}}" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                        <a href="/eliminarTipos/{{tipo.id}}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h3>No hay Tipos</h3>
+                {% endif %}
+            </div>
+        </form>
+        <!--formulario de botones opciones de usuario-->
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quieres cerrar la sesión?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Selecciona "Cerrar Sesión" si deseas cerrar sesión.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<!--DATATABLE-->
+<!-- Page level plugins -->
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+<!--DATATABLE-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
